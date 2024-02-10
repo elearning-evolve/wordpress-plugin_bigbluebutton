@@ -155,7 +155,7 @@ class Bigbluebutton_Admin {
 				__( 'Get Pro Version', 'bigbluebutton' ),
 				__( 'Get Pro Version', 'bigbluebutton' ),
 				'manage_options',
-				'bbb-room-server-settings',
+				'bbb-room-pro-version',
 				array( $this, 'redirect_to_pro_version' )
 			);
 		}
@@ -326,7 +326,7 @@ class Bigbluebutton_Admin {
 			"window
                 .open(
                     '" . esc_html( VIDEO_CONF_WITH_BBB_PRO ) . "',
-                    '_blank'
+					'_self'
                 )
                 .focus();
 			"
