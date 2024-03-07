@@ -201,7 +201,7 @@ class Bigbluebutton_Admin {
 				return;
 			}
 		}
-		
+
 		$custom_columns = array(
 			'category'       => __( 'Category' ),
 			'permalink'      => __( 'Invite Participants' ),
@@ -239,7 +239,7 @@ class Bigbluebutton_Admin {
 				return;
 			}
 		}
-		
+
 		switch ( $column ) {
 			case 'category':
 				$categories = wp_get_object_terms( $post_id, 'bbb-room-category', array( 'fields' => 'names' ) );
@@ -526,7 +526,7 @@ class Bigbluebutton_Admin {
 	public function filter_rooms_list( $query ) {
 		global $pagenow;
 
-		if ( 'edit.php' != $pagenow || ! $query->is_admin || 'bbb-room' != $query->query_vars['post_type'] ) {
+		if ( 'edit.php' != $pagenow || ! $query->is_admin || ! isset( $query->query_vars['post_type'] ) || 'bbb-room' != $query->query_vars['post_type'] ) {
 			return $query;
 		}
 
@@ -538,6 +538,7 @@ class Bigbluebutton_Admin {
 
 	/**
 	 * Display a custom taxonomy dropdown in admin
+	 *
 	 * @author Mike Hemberger
 	 * @link http://thestizmedia.com/custom-post-type-filter-admin-custom-taxonomy/
 	 */
@@ -564,6 +565,7 @@ class Bigbluebutton_Admin {
 
 	/**
 	 * Filter posts by taxonomy in admin
+	 *
 	 * @author  Mike Hemberger
 	 * @link http://thestizmedia.com/custom-post-type-filter-admin-custom-taxonomy/
 	 */

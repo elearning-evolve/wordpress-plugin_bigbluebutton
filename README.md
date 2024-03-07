@@ -1,4 +1,4 @@
-# Virtual Classroom for WordPress #
+# Virtual Classroom & Video Conferencing - BigBlueButton #
 
 
 Contributors: blindsidenetworks, jfederico, yfngdu, elearningevolve, adeelraza_786@hotmail.com  
@@ -7,7 +7,7 @@ Tags: BigBlueButton, BigBlueButtom, BBB, bbb, bigbluebutton, videoconferencing, 
 Requires at least: 5.1  
 Tested up to: 6.4.3  
 Requires PHP: 7.2  
-Stable tag: 2.3.5  
+Stable tag: 2.3.6  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -177,6 +177,10 @@ To allow a user role to manage recordings add the capability, **manage_bbb_room_
 8. BBB Rooms can also be organized using Categories.
 
 ## Changelog ##
+### 2.3.6 ###
+* Updated: BBB hosting details on settings page
+* Added: Support for adding custom button text with Pro plugin
+
 ### 2.3.5 ###
 * Tested: Compatibility with WP v6.4.3
 

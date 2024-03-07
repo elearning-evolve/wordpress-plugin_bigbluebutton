@@ -87,6 +87,11 @@ class Bigbluebutton_Display_Helper {
 			$join_btn = str_replace( 'Join', __( 'Start', 'bigbluebutton' ), $join_btn );
 		}
 
+		// If set from plugin settings then override all
+		if ( get_option( 'bbb_pro_join_here_text' ) ) {
+			$join_btn = get_option( 'bbb_pro_join_here_text' );
+		}
+
 		ob_start();
 		include VIDEO_CONF_WITH_BBB_PUBLIC_PATH . 'partials/bigbluebutton-join-display.php';
 		$form = ob_get_contents();
