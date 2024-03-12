@@ -35,8 +35,12 @@ class Bigbluebutton_Activator {
 		}
 
 		if ( ! get_option( 'ee_bb_flush_rewrite_rules_flag' ) ) {
-			add_option( 'ee_bb_flush_rewrite_rules_flag', true );
+			add_option( 'ee_bb_flush_rewrite_rules_flag', true, '', 'no' );
 		}
+		
+		// Create the default BBB room on plugin activate
+		$plugin_admin_register_custom_types = new Bigbluebutton_Register_Custom_Types();
+		$plugin_admin_register_custom_types->default_bbb_room();
 	}
 
 	public static function admin_init() {

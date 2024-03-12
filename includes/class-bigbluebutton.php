@@ -119,13 +119,11 @@ class VideoConferencingWithBBB {
 	private function load_dependencies() {
 		/**
 		 * The activator class
-		 *
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bigbluebutton-activator.php';
 
 		/**
 		 * The class for all helper functions
-		 *
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bigbluebutton-helper.php';
 
@@ -218,7 +216,7 @@ class VideoConferencingWithBBB {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/helpers/class-bigbluebutton-permissions-helper.php';
 
 		$this->loader = new Bigbluebutton_Loader();
-		$this->loader->add_action( 'plugins_loaded', $this, 'check_migration' );
+		//$this->loader->add_action( 'plugins_loaded', $this, 'check_migration' );
 	}
 
 	/**
@@ -234,7 +232,7 @@ class VideoConferencingWithBBB {
 
 		$plugin_i18n = new Bigbluebutton_I18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -270,7 +268,6 @@ class VideoConferencingWithBBB {
 		$this->loader->add_action( 'init', $plugin_admin_register_custom_types, 'bbb_room_as_post_type' );
 		$this->loader->add_action( 'init', $plugin_admin_register_custom_types, 'bbb_room_category_as_taxonomy_type' );
 		$this->loader->add_action( 'init', $plugin_admin_register_custom_types, 'flush_rewrite_rules_maybe', 20 );
-		$this->loader->add_action( 'init', $plugin_admin_register_custom_types, 'default_bbb_room', 30 );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

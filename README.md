@@ -7,7 +7,7 @@ Tags: BigBlueButton, BigBlueButtom, BBB, bbb, bigbluebutton, videoconferencing, 
 Requires at least: 5.1  
 Tested up to: 6.4.3  
 Requires PHP: 7.2  
-Stable tag: 2.3.6  
+Stable tag: 2.3.7  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -177,6 +177,9 @@ To allow a user role to manage recordings add the capability, **manage_bbb_room_
 8. BBB Rooms can also be organized using Categories.
 
 ## Changelog ##
+### 2.3.7 ###
+* Updated: Performance updates and speed optimization
+
 ### 2.3.6 ###
 * Updated: BBB hosting details on settings page
 * Added: Support for adding custom button text with Pro plugin

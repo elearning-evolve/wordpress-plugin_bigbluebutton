@@ -32,22 +32,24 @@ class Bigbluebutton_Admin_Helper {
 		$default_code = bin2hex( random_bytes( $length / 2 ) );
 		return $default_code;
 	}
-	
+
 	public static function check_posts() {
 		$args = array(
 			'post_type'   => 'bbb-room',
 			'post_status' => 'publish',
-			'numberposts' => -1,
+			'numberposts' => 3,
+			'fields'      => 'ids',
+			'orderby'     => 'none',
 		);
 
 		$posts = get_posts( $args );
-		
-		if( ! Bigbluebutton_Loader::is_bbb_pro_active() ) {
-			if( $posts && count( $posts ) > ( 1 + 1 ) ) {
+
+		if ( ! Bigbluebutton_Loader::is_bbb_pro_active() ) {
+			if ( $posts && count( $posts ) >= ( 1 + 1 ) ) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }
