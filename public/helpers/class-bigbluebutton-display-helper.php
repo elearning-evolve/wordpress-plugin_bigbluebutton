@@ -54,9 +54,15 @@ class Bigbluebutton_Display_Helper {
 	 */
 	public function get_join_form_as_string( $room_id, $meta_nonce, $access_as_moderator, $access_as_viewer, $access_using_code ) {
 		global $wp, $post;
-		$current_url = home_url( add_query_arg( array(), $wp->request ) );
-		$start_time  = get_post_meta( $room_id, 'bbb-start-time', true );
-		$post_id = ( isset( $post->ID ) ? $post->ID : 0 );
+		$is_join_web                      = 1;
+		$start_time                       = get_post_meta( $room_id, 'bbb-start-time', true );
+		$args['action']                   = 'join_room';
+		$args['bbb_join_room_meta_nonce'] = sanitize_text_field( $meta_nonce );
+		$args['current_page']             = get_permalink();
+		$args['post_id']                  = sanitize_text_field( ( isset( $post->ID ) ? $post->ID : 0 ) );
+		$url                              = get_permalink() . '?' . http_build_query( $args );
+		$_REQUEST['room_id']              = ( isset( $_REQUEST['room_id'] ) ? $_REQUEST['room_id'] : 0 );
+
 		if ( $start_time ) {
 			$dt     = new DateTime( $start_time, new DateTimeZone( wp_timezone_string() ) );
 			$dt_now = new DateTime( 'now', new DateTimeZone( wp_timezone_string() ) );
@@ -73,11 +79,21 @@ class Bigbluebutton_Display_Helper {
 			$join_btn    = __( 'Join', 'bigbluebutton' );
 		} else {
 			$form_target = '';
-			$join_btn    = __( 'Join Here', 'bigbluebuttonpro' );
+			$join_btn    = __( 'Join Here', 'bigbluebutton' );
+			$is_join_web = get_option( 'bbb_pro_join_web_iframe', 1 );
+		}
+
+		if ( $access_as_moderator ) {
+			$join_btn = str_replace( 'Join', __( 'Start', 'bigbluebutton' ), $join_btn );
+		}
+
+		// If set from plugin settings then override all
+		if ( get_option( 'bbb_pro_join_here_text' ) ) {
+			$join_btn = get_option( 'bbb_pro_join_here_text' );
 		}
 
 		ob_start();
-		include $this->file . 'partials/bigbluebutton-join-display.php';
+		include VIDEO_CONF_WITH_BBB_PUBLIC_PATH . 'partials/bigbluebutton-join-display.php';
 		$form = ob_get_contents();
 		ob_end_clean();
 		return $form;
@@ -117,11 +133,9 @@ class Bigbluebutton_Display_Helper {
 	 * @return  String      $html_recordings                    Recordings table stored in a variable.
 	 */
 	private function get_recordings_as_string( $room_id, $recordings, $manage_bbb_recordings, $view_extended_recording_formats ) {
-		$columns = 5;
-		if ( $manage_bbb_recordings ) {
-			$columns++;
-		}
-		$sort_fields = $this->set_order_by_field();
+		$columns                     = 5;
+		$recording_description_exist = null;
+		$sort_fields                 = $this->set_order_by_field();
 		ob_start();
 		$meta_nonce                                     = wp_create_nonce( 'bbb_manage_recordings_nonce' );
 		$date_format                                    = ( get_option( 'date_format' ) ? get_option( 'date_format' ) : 'Y-m-d' );
@@ -129,6 +143,12 @@ class Bigbluebutton_Display_Helper {
 		$bbb_recording_display_text                     = new stdClass();
 		$bbb_recording_display_text->presentation       = __( 'View', 'bigbluebutton' );
 		$bbb_recording_display_text->presentation_video = __( 'Download', 'bigbluebutton' );
+
+		foreach ( $recordings as $recording ) {
+			if ( ! empty( trim( $recording->metadata->{'recording-description'} ) ) ) {
+				$recording_description_exist = 1;
+			}
+		}
 
 		include $this->file . 'partials/bigbluebutton-recordings-display.php';
 		$html_recordings = ob_get_contents();
@@ -193,7 +213,7 @@ class Bigbluebutton_Display_Helper {
 	 */
 	public function get_room_list_dropdown_as_string( $rooms, $selected_room, $html_form ) {
 		ob_start();
-		include $this->file . 'partials/bigbluebutton-room-dropdown-display.php';
+		include VIDEO_CONF_WITH_BBB_PUBLIC_PATH . 'partials/bigbluebutton-room-dropdown-display.php';
 		$dropdown = ob_get_contents();
 		ob_end_clean();
 		return $dropdown;

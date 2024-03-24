@@ -76,6 +76,8 @@ if ( ! class_exists( 'Bigbluebutton_Uninstall' ) ) {
 				'create_recordable_bbb_room',
 				'manage_bbb_room_recordings',
 				'view_extended_bbb_room_recording_formats',
+				'add_bbb_rooms',
+				'can_limit_user_in_bbb_rooms',
 			);
 
 			if ( empty( $rooms ) ) {
@@ -92,7 +94,7 @@ if ( ! class_exists( 'Bigbluebutton_Uninstall' ) ) {
 					'delete_published_bbb_rooms',
 					'delete_others_bbb_rooms',
 					'edit_private_bbb_rooms',
-					'edit_published_bbb_rooms'
+					'edit_published_bbb_rooms',
 				);
 			} elseif ( property_exists( $rooms, 'cap' ) ) {
 				$room_capabilities = array_values( get_object_vars( $rooms->cap ) );
@@ -128,6 +130,9 @@ if ( ! class_exists( 'Bigbluebutton_Uninstall' ) ) {
 			delete_option( 'bigbluebutton_salt' );
 			delete_option( 'bigbluebutton_plugin_version' );
 			delete_option( 'bigbluebutton_default_roles_set' );
+			delete_option( 'video_conf_with_bbb_version' );
+			delete_option( 'ee_bb_default_bbb_room' );
+			delete_option( 'bbb_flush_incorrect_caps_once' );
 		}
 	}
 }

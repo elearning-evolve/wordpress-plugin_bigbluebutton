@@ -58,11 +58,11 @@ class Bigbluebutton_Api {
 
 		$url = self::build_url( 'create', $arr_params );
 
-		if ( Bigbluebutton_Loader::is_bbb_pro_active() ) {
+		if ( Bigbluebutton_Loader::is_bbb_pro_active() && class_exists( 'Bigbluebuttonpro_Helper' ) ) {
 			$full_response = Bigbluebuttonpro_Helper::get_response( $url, 'get', $arr_params );
 		}
 
-		if ( ! $full_response ) {
+		if ( ! isset( $full_response ) || ! $full_response ) {
 			$full_response = self::get_response( $url );
 		}
 
@@ -70,7 +70,7 @@ class Bigbluebutton_Api {
 			return 404;
 		}
 
-			$response = self::response_to_xml( $full_response );
+		$response = self::response_to_xml( $full_response );
 
 		if ( property_exists( $response, 'returncode' ) && 'SUCCESS' == $response->returncode ) {
 			return 200;
@@ -96,21 +96,30 @@ class Bigbluebutton_Api {
 	 *
 	 * @return  String  $url|null   URL to enter the meeting.
 	 */
-	public static function get_join_meeting_url( $room_id, $username, $password, $logout_url = null ) {
+	public static function get_join_meeting_url( $room_id, $username, $password, $viewer_code = null, $logout_url = null ) {
 
 		$rid    = intval( $room_id );
 		$uname  = sanitize_text_field( $username );
 		$pword  = sanitize_text_field( $password );
 		$lo_url = ( $logout_url ? esc_url( $logout_url ) : get_permalink( $rid ) );
+		$is_mod = ( $password != $viewer_code ? true : false );
 
 		if ( get_post( $rid ) === false || 'bbb-room' != get_post_type( $rid ) ) {
 			return null;
 		}
 
 		if ( ! self::is_meeting_running( $rid ) ) {
-			$code = self::create_meeting( $rid, $lo_url );
-			if ( 200 !== $code ) {
-				wp_die( esc_html__( $code, 'bigbluebutton' ) );
+			$wait_for_mod = get_post_meta( $room_id, 'bbb-room-wait-for-moderator', true );
+			$viewer_code  = strval( get_post_meta( $room_id, 'bbb-room-viewer-code', true ) );
+
+			// If viewer & wait for mod is enabled then dont start meeting
+			if ( $pword == $viewer_code && 'true' == $wait_for_mod ) {
+				// dont start meeting
+			} else {
+				$code = self::create_meeting( $rid, $lo_url );
+				if ( 200 !== $code ) {
+					wp_die( esc_html__( $code, 'bigbluebutton' ) );
+				}
 			}
 		}
 
@@ -121,11 +130,13 @@ class Bigbluebutton_Api {
 				'meetingID' => rawurlencode( $meeting_id ),
 				'fullName'  => $uname,
 				'password'  => rawurlencode( $pword ),
+				'roomId'    => $rid,
+				'isMod'     => $is_mod,
 			)
 		);
 
 		$url = self::build_url( 'join', $arr_params );
-
+		
 		return $url;
 	}
 
@@ -389,7 +400,7 @@ class Bigbluebutton_Api {
 	public static function test_bigbluebutton_server( $url, $salt ) {
 		$test_url      = $url . 'api/getMeetings?checksum=' . sha1( 'getMeetings' . $salt );
 		$full_response = self::get_response( $test_url );
-
+		
 		if ( is_wp_error( $full_response ) ) {
 			return false;
 		}
@@ -447,15 +458,27 @@ class Bigbluebutton_Api {
 	private static function build_url( $request_type, $args ) {
 		$type = sanitize_text_field( $request_type );
 
-		$url_val  = sanitize_text_field( get_option( 'bigbluebutton_url', 'https://test.bymond.live/bigbluebutton/' ) );
-		$salt_val = sanitize_text_field( get_option( 'bigbluebutton_salt', 'jcBmHVuxJcd1LFvMQrI179uiDqpXrnNGKbNjYl0uCM' ) );
+		if ( Bigbluebutton_Loader::is_bbb_pro_active() ) {
+
+			$settings = array(
+				'bbb_url'  => '',
+				'bbb_salt' => '',
+			);
+
+			$settings = apply_filters( 'bbb_room_server_settings_display', $settings );
+			$url_val  = sanitize_text_field( $settings['bbb_url'] );
+			$salt_val = sanitize_text_field( $settings['bbb_salt'] );
+		} else {
+			$url_val  = sanitize_text_field( get_option( 'bigbluebutton_url', VIDEO_CONF_WITH_BBB_ENDPOINT ) );
+			$salt_val = sanitize_text_field( get_option( 'bigbluebutton_salt', VIDEO_CONF_WITH_BBB_SALT ) );
+		}
 
 		$url = $url_val . 'api/' . $type . '?';
 
 		$params = http_build_query( $args );
 
 		$url .= $params . '&' . 'checksum=' . sha1( $type . $params . $salt_val );
-
+		
 		return $url;
 	}
 }

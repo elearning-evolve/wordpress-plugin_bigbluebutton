@@ -6,7 +6,7 @@
 .bbb-room-selection {
     display: inline-block;
     min-width: 10em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     background: #fff;
 }
 
@@ -23,14 +23,19 @@
     display: flex;
     width: 100%;
     margin: auto 0;
-    border-left: solid 1px #d9d9d9;
     transition: 0.5s;
+    justify-content: center;
 }
 
 .flex-row {
     padding: 0.5em 0.5em;
-    border-right: solid 1px #d9d9d9;
+    border-left: solid 1px #d9d9d9;
     border-bottom: solid 1px #d9d9d9;
+    text-align: center;
+}
+
+.flex-row:last-child {
+    border-right: solid 1px #d9d9d9;
 }
 
 .bbb-flex-table:nth-child(even) .flex-row {
@@ -54,14 +59,14 @@
 }
 
 .flex-row-5 {
-    width: calc(100% / 5);
+    width: calc(100% / 4);
 }
 
 .flex-row-6 {
     width: calc(100% / 6);
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 768px) {
     .bbb-flex-table {
         flex-flow: row wrap;
     }
@@ -81,6 +86,13 @@
 
     .bbb-header > .flex-row {
         border-bottom: solid 1px;
+    }
+}
+
+/* Media query for tablet and mobile */
+@media (max-width: 768px) {
+    #bbb-recordings-table .bbb-header {
+        display: none;
     }
 }
 
@@ -117,9 +129,18 @@
 }
 
 #joinroom .bbb-button, .bbb-button {
-    color: #fff !important;
-    background-color: #06172a !important;
-    padding: 0.7em 1.6em;
+    color: #fff;
+    background-color: #007acc;
+    padding: 0.7em 1em;
+    border: none;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+}
+
+#joinroom .bbb-button:hover {
+    color: #fff;
 }
 
 .bbb-recording-link:hover,
@@ -128,14 +149,14 @@
 .bbb-button:hover,
 .bbb-button:focus,
 .bbb-button:active {
-    border-color: #006799 !important;
-    background-color: #0a9ed4 !important;
+    border-color: #006799;
+    color: #fff;
 }
 
 .bbb-recording-link > a {
     color: #fff;
-    box-shadow: none !important;
-    text-decoration: none !important;
+    box-shadow: none;
+    text-decoration: none;
 }
 
 .bbb-recording-link > a:hover,
@@ -168,6 +189,11 @@
 
 .bbb-recordings-display {
     cursor: pointer;
+    margin-top: 10px;
+}
+
+[id^="bbb-recordings-list-"] {
+    margin-bottom: 20px;
 }
 
 .bbb-recording-display-block {
@@ -189,6 +215,43 @@
     margin-bottom: 1em;
 }
 
-.bbb-form {
+.bbb-form, .bbb-room-selection-block {
     text-align: center;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

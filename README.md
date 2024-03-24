@@ -1,40 +1,65 @@
-# Video Conferencing with BigBlueButton (BBB) #
-
+# Virtual Classroom - Video Conferencing & Online Meeting with BigBlueButton #
 
 Contributors: blindsidenetworks, jfederico, yfngdu, elearningevolve, adeelraza_786@hotmail.com  
 Donate link: https://elearningevolve.com/products/donate/  
-Tags: bigbluebutton, videoconferencing, virtual classroom, web conferencing, online teaching, learning management system. lms  
+Tags: virtual classroom, video conference, BigBlueButton, BBB, online meeting, web conferencing, online teaching, learning management system, LMS, online session, live training, video conferencing, video conference, meetings, virtual meetings
 Requires at least: 5.1  
-Tested up to: 5.9.3  
+Tested up to: 6.4.3  
 Requires PHP: 7.2  
-Stable tag: 1.2.0  
+Stable tag: 2.3.8  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
-A [BigBlueButton (BBB) WordPress plugin](https://wordpress.org/plugins/video-conferencing-with-bbb) that enables you to create virtual classrooms on your WP site. BigBlueButton is an open-source video conferencing tool that is "Built For Teachers".
+This plugin allows teachers to manage their live virtual classrooms, video conference and online meeting right from WordPress. As an educator, this stands out as one of the top choices for online meetings.
 
 ## Description ##
 
-[Video Conferencing with BBB](https://wordpress.org/plugins/video-conferencing-with-bbb) integrates [BigBlueButton](https://bigbluebutton.org/) into WordPress through which teachers can manage their virtual classrooms right from the WP dashboard.
+[Virtual Classroom for WordPress](https://wordpress.org/plugins/video-conferencing-with-bbb) integrates [BigBlueButton](https://bigbluebutton.org/) into WordPress through which teachers can manage their virtual classrooms/video conferences right from the WP dashboard.
 
-This plugin is a fork of the [BigBlueButton plugin](https://wordpress.org/plugins/bigbluebutton/) initially released by Blindside Networks but no longer maintained.
+BBB stands as an open-source video conferencing solution crafted with the motto **"Built For Teachers"**. Equipped with all the essential features typical of a web conferencing platform, it goes beyond by facilitating active collaboration to enhance virtual classroom engagement. As an educator, BBB stands out as one of the top choices for online meetings. Explore all its features [here](https://support.blindsidenetworks.com/hc/en-us/articles/360052738972-What-are-the-features-in-BigBlueButton-).
 
-BBB is an open-source video conferencing tool that is designed and **"Built For Teachers"**. It has all the core features you would expect in a web conferencing system. Additionally, it offers features that can empower teachers to engage their students in the virtual classroom by enabling active collaboration.
+### REQUIRED: BigBlueButton Server ###
+BBB requires a hosting server that can be connected to our plugin. Please refer to our [hosting guide](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/) for setup.
 
-[See All BBB Features](https://support.blindsidenetworks.com/hc/en-us/articles/360052738972-What-are-the-features-in-BigBlueButton-)
-
-### BBB WordPress Plugin Features ###
-The BBB WordPress plugin enables the user to create BBB rooms right from the WordPress dashboard. Once the room is created it can be added to any WordPress page through a simple shortcode. There is also a possibility to enter multiple rooms in the shortcode to let the user choose the room that they want to join.
+### Virtual Classroom for WordPress Features ###
+Virtual Classroom for WordPress enables the user to create BBB rooms right from the WordPress dashboard. Once the room is created it can be added to any WordPress page through a simple shortcode. There is also a possibility to enter multiple rooms in the shortcode to let the user choose the room that they want to join.
 
 The student can simply click Join from the page where the shortcode is added and enter the BBB room where the teacher can initiate a virtual classroom session.
 
 After the session is over the plugin can also display the recording of the session on the same page so that the students can take the keynotes from the session later on.
 
-**There is also a Pro version available with this plugin that offers more features, [learn more](https://elearningevolve.com/products/video-conferencing-with-bigbluebutton-pro/)**.
+### Free Plugin Limitations ###
+* Add New option for BBB Rooms on backend is limited to only a maximum of 2 Rooms
+* Join room on the same WP page is not available. Only join in a new full screen window is supported
 
-To get up and running in no time with a managed BigBlueButton hosting provider please refer to our [Recommended BBB hosting providers](https://elearningevolve.com/blog/bigbluebutton-hosting).
 
-For further queries feel free to [contact us](https://elearningevolve.com/contact/).
+### Pro Version Features ###
+There is also a Pro version available with this plugin that offers the below features:
+* Moderators frontend Room management area
+* Embed BigBlueButton Room on WordPress i.e join room on the same WP page
+* Set a Countdown/Schedule for Room
+* Fully White-label Virtual Classroom
+* Limit the max allowed participants for a room e.g (5, 10, .. etc) both on a per room and per page basis. This can allow you to conduct a 1:1 or group session
+* Upload your brand logo that is visible in the BBB room
+* Customize the room background-color as per your brand color
+* Change welcome message that is displayed in the Public Chat section of the room
+* Customize thank you message when the user leaves the meeting
+* Pre-upload your presentation (ability to upload both globally and per room basis)
+
+**[Get Pro Version](https://elearningevolve.com/products/wp-virtual-classroom/)**
+### Video Guide ###
+[![Video Guide](https://elearningevolve.com/wp-content/uploads/2022/04/bbb-room-youtube.jpeg)](https://youtu.be/xb5wR-VcrXs)
+[youtube https://www.youtube.com/watch?v=xb5wR-VcrXs]
+
+### How-Tos ###
+
+* [How to set up hosting & get Endpoint URL/Secret for Virtual Classroom for WordPress](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/)
+* [How to join BigBlueButton Room from WordPress](https://elearningevolve.com/blog/how-to-join-bigbluebutton-room-from-wordpress/)
+* [How to limit number of users for BigBlueButton Room on WordPress](https://elearningevolve.com/blog/how-to-limit-number-of-users-for-bigbluebutton-room-on-wordpress/)
+* [How to allow instructors or users to manage BigBlueButton Rooms on WordPress](https://elearningevolve.com/blog/how-to-allow-instructors-to-manage-bbb-rooms-on-wp/)
+
+
+For further queries feel free to [contact us](https://elearningevolve.com/contact/) or directly reach out on *info@elearningevolve.com*
 
 ## Installation ##
 
@@ -56,83 +81,85 @@ Here's an overview of the installation.
    1. You are ready to begin creating meetings and holding conferences.
 
 ## Frequently Asked Questions ##
+**Cannot see Add New option for BBB Rooms**
+The free plugin allows you to Add New maximum 2 BBB Rooms. To create unlimited rooms activate the [Pro version](https://elearningevolve.com/products/wp-virtual-classroom/) on your site
+
+**404 error when joining BBB room**
+It is required that your BBB hosting server is up and running before you join a BBB room. This error is likely to show up when the
+default BBB test instance is not started from the BBB cloud. Please review this [hosting guide](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/) to understand how to start the cloud instance.
+
+**401 unauthorized error when BBB room window opens within the page**
+It is required that your BBB hosting server supports the BBB room in an iFrame for our Pro plugin else the room window within a page will display a 401 unauthorized error when starting a meeting. The solution to add the iFrame support on BBB hosting server is mentioned on Github [here](https://github.com/bigbluebutton/bigbluebutton/issues/9998#issuecomment-678272306). Our list of [recommended BBB hosts](https://elearningevolve.com/blog/bigbluebutton-hosting/) already support this feature.
 
 **How do I create meetings?**
-After activating the BigBlueButton plugin, click on "BBB Rooms" and "Add New" and give the meeting a title and fill out the room details.
+After activating the plugin, click on "BBB Rooms" and "Add New" and give the meeting a title and fill out the room details.
 
-**How can users join the meetings?**
+**How to display room join form?**
 
-Users join meetings using a join room form. This form can be shown on a site as a sidebar element or as a page/post.
+* By default, each room will be on its own page, with the permalink listed under BBB Rooms -> All Rooms. 
+* A single BBB Room can also be inserted into any post/page using the **[bigbluebutton] shortcode** with a specified token in the shortcode in the format,
+`[bigbluebutton token=z2xxx]`
+* There is also an option to insert multiple Rooms to any post/page where the user can select a specific room to join. To achieve this insert multiple tokens in the shortcode in the format,
+`[bigbluebutton token=z2xxx,z2yyy]`
+* Users join meetings using a join room form. This form can be shown on a site as a sidebar element or as a page/post.
+* For setting up in the sidebar, add the BBB Rooms widget, as you do with any other widget, dragging the box to the position you want it to be in.
 
-For setting up in the sidebar, add the BBB Rooms widget, as you do with any other widget, dragging the box to the position you want it to be in.
-
-By default, each room will be on its own page, with the permalink listed in the BBB Rooms page on the admin panel. BBB Rooms can also be inserted into any post/page using the **[bigbluebutton] shortcode** with specified tokens, token1, token2 in the shortcode in the format,
-`[bigbluebutton token="token1,token2"]`
+**How to join the BBB room?**
+Once you display the room join form on your preferred page or section on your site. Simply, share the website link of your page with your participants and they can join the BBB room directly from there.
 
 **How can users view recordings?**
 
-By default, each room will have its own page, which will display the room description, join button, and recordings.
+By default, the recordings display under each room created under BBB Rooms -> All Rooms.
 
-To place recordings on a separate post/page, use the shortcode `[bigbluebutton type="recording"]`, with the room tokens of the desired recordings. For example, the recordings for the tokens, token1, token2 can be displayed using,
-`[bigbluebutton type="recording" token="token1, token2"]`
+* To place recordings on a separate post/page, use the shortcode `[bigbluebutton type=recording]`, with the room token of the desired recording e.g:
+`[bigbluebutton type=recording token=z2xxx]`
+* To place multiple recordings on a separate post/page, use the shortcode `[bigbluebutton type=recording]`, with the room tokens of the desired recording e.g:
+`[bigbluebutton type=recording token=z2xxx,z2yyy]`
 
 **How to let users select a specific BBB room to join from frontend**
 
-Insert the token of your BBB Room that you would like the users to select from in the shortcode with this format, `[bigbluebutton token="token1,token2"]`
+Insert the token of your BBB Room that you would like the users to select from in the shortcode with this format, `[bigbluebutton token=z2xxx,z2yyy]`
 
-**I've migrated my rooms. Now it says they're missing when I try to access them!**
-Please try going to settings, and save permalinks. There is no need to change your permalink structure.
+**Which users are required to enter the Name and Access Code on room join form?**
+* *For non-logged in users:* The Name & Access Code will be always required.
+* *For logged-in users:* The login username will be taken as their Name. The Access Code field does not displays for logged-in users 
+* *For logged-in users:* To apply the Access Code requirement for a user role, you can customize the particular user role by adding the capability, **join_with_access_code_bbb_room** and remove the capability **join_as_viewer_bbb_room**.
 
-**I'm an admin and when I tried to enter a room, I couldn't enter as a moderator.**
-Please try deactivating the plugin, and reactivating it again.
+**How can I change the capability/permissions of a user role?**
 
-**Why sometimes the Name and Password are required, some others only the Name and others only the Password?**
+You can install the [**"User Role Editor plugin"**](https://wordpress.org/plugins/user-role-editor/) and update the capabilities/permissions from **"Users" > "User Role Editor"**.
+[See User Role Plugin Usage Screenshot](https://elearningevolve.com/wp-content/uploads/2022/04/bbb-room-user-roles-editor.jpeg)
 
-The plugin gathers the much information it can from WordPress, but what will be taken depends on the configuration.
+**How to allow a user role to create BBB Rooms from the Dashbaord?**
 
-For registered users, their registered name or username will be taken as their Name.
+See our detailed [step by step guide](https://elearningevolve.com/blog/how-to-allow-instructors-to-manage-bbb-rooms-on-wp/) to learn this.
 
-For registered users whose role has been set for requiring always a password, only the Password will be required.
+**How to assign a WordPress user role as the moderator for the BBB room?**
 
-For anonymous users, the Name will be always required, but again the Password requirement will depend on the configuration. If Moderator/Attendee capability has been set for them no Password box will be shown in their join room form.
+* By default, the user who has created a BBB room and will always join their room as a moderator, this does not apply to others'rooms.
+* The WordPress site administrators have the moderator access for all BBB Rooms.
+* Additionally, you can customize your site user roles to add the capability,  **join_as_moderator_bbb_room** for your preferred role to grant them the moderator access for all BBB Rooms like the administrator.
 
-**How can I change the permissions of the users?**
+**How to Restrict number of users or max participants for all rooms or per room?**
+This feature is available in our [Pro plugin](https://elearningevolve.com/products/wp-virtual-classroom/). You can limit the max participants for all the rooms from *BBB Rooms -> Settings -> Room Config*
+[See Global Participant Limit Screenshot](https://elearningevolve.com/wp-content/uploads/2022/04/bbb-room-limit-participant-global.jpeg)
 
-You should install and activate the **"User Role Editor" plugin by Vladimir Garagulya** and in the Dashboard under the **"Users" > "User Role Editor",** update the permissions.
+You can also override the global settings or set a different limit for each page by setting the max participants param with each shortcode that is added to a page.
+[See Shortcode Level Limit Screenshot](https://elearningevolve.com/wp-content/uploads/2022/04/bbb-room-limit-participant-shortcode.jpeg)
 
-To allow another user to create and edit rooms, assign them a role that has the permissions, **publish_bbb_rooms, edit_bbb_rooms, edit_posts, delete_bbb_rooms, delete_published_bbb_rooms, and edit_published_bbb_rooms.** The permission structure is similar for posts and pages.
+**Where do administrator of the room login to their page/ room to schedule and manage meetings**
+They need to login to their WordPress dashboard https://mywpsite.com/wp-admin
+from the dashbaord they can manage the room from BBB Rooms menu.
 
-To allow another user to create and edit room categories, assign them a role that has the permissions, **manage_categories.** This does not give them permission to create rooms. They can only manage room categories.
-
-To allow another user to join as moderator, viewer, or with a code, assign them to a role with one of the corresponding permissions, **join_as_moderator_bbb_room, join_as_viewer_bbb_room, or join_with_password_bbb_room.** By default, the owner of the room will always join their rooms as a moderator. The default does not apply to others' rooms.
-
-To allow another user to manage recordings, assign them to a role that has the permission, **manage_bbb_room_recordings.**
-
-To allow another user to use shortcodes or the widget, assign them to a role that has the permission, **edit_bbb_rooms, edit_posts.**
-
-If there are no roles with the corresponding permissions, please create a custom role using the **"Members" plugin** and assign the permission to that role.
-
-**Is there any way users can go directly into a meeting?**
-
-To provide direct access to the meeting rooms by adding the meeting token ID to the shortcode: `[bigbluebutton token="aa2817f3a1e1"]`
-
-The joining form is the same, so with the right permission configuration users would be able to join meetings with one click.
-
-**Why is it giving an error about creating a meeting room?**
-
-Make sure you are using BigBlueButton 0.8 or higher. Ensure the server settings are configured correctly.
-
-**How can I improve security?**
-
-You should enable the curl extension in php.ini.
-
-**I tried to preview my room, and nothing showed up!**
-
-BBB Rooms may not be viewed until they are published. Please try again after publication.
+**How to schedule a BBB room meeting**
+This feature is available in our [Pro plugin](https://elearningevolve.com/products/wp-virtual-classroom/) where the Room admin can set a date/time of room meeting to start for each of the rooms.
+[See BBB Room Countdown Screenshot](https://elearningevolve.com/wp-content/uploads/2022/04/bbb-room-countdown-setting.jpeg)
 
 **I want to edit my recordings. How do I do that?**
 
 If a user has the capability to manage recordings, they will see a pencil icon next to the recording name and description. Click on the icon to start editing, and press enter to submit. A user can cancel editing by pressing the ESC key.
+
+To allow a user role to manage recordings add the capability, **manage_bbb_room_recordings**.
 
 ## Screenshots ##
 
@@ -146,9 +173,134 @@ If a user has the capability to manage recordings, they will see a pencil icon n
 8. BBB Rooms can also be organized using Categories.
 
 ## Changelog ##
+### 2.3.8 ###
+* Fixed: plugin shortcodes not working with Woffice WordPress theme 
+
+### 2.3.7 ###
+* Updated: Performance updates and speed optimization
+
+### 2.3.6 ###
+* Updated: BBB hosting details on settings page
+* Added: Support for adding custom button text with Pro plugin
+
+### 2.3.5 ###
+* Tested: Compatibility with WP v6.4.3
+
+### 2.3.4 ###
+* Fixed: BBB shortcode column displays on admin screens other than BBB room list
+
+### 2.3.3 ###
+* Updated: Sort recordings in descending order by date in BBB room recordings list display
+
+### 2.3.2 ###
+* Updated: Improve UI styling for recording table view on room page
+
+### 2.3.1 ###
+* Fixed: 400 error on recording view due to incorrect recording URL
+
+### 2.3.0 ###
+* Updated: Improve layout for Recording list on room join page for mobile view
+
+### 2.2.2 ###
+* Fixed: Added checks to prevent PHP warning & minor bug fixes
+
+### 2.2.1 ###
+* Updated: Improved reporting messages in the plugin
+* Added: Quick subscribe option from plugin settings page
+* Removed: Subscribe page from plugin menus
+
+### 2.2.0 ###
+* Added: BBBHost.Cloud [test instance](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/#start-test) start button on settings page
+
+### 2.1.1 ###
+* Updated: Plugin hosting notice on settings page
+
+### 2.1.0 ###
+* Added: [Hosting guide](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/) details on the plugin settings page.
+
+### 2.0.1 ###
+* Fixed: Ability to add Endpoint URL not having /bigbluebutton in the URL
+
+### 2.0.0 ###
+* Added: Support for adding multiple BBB rooms on a single page
+* Added: Support for adding multiple BBB room join forms on a single page
+* Added: Support for adding multiple BBB room recordings on a single page
+
+### 1.6.2 ###
+* Fixed: Start/Join Here button opening in a new tab change it to open in the same window
+
+### 1.6.1 ###
+* Added: Compatibility with v2.4.3 of the [BigBlueButton Pro plugin](https://elearningevolve.com/products/wp-virtual-classroom/)
+* Fixed: Join button UI issue on some browsers
+
+### 1.6.0 ###
+* Added: Compatibility with v2.4.2 of the [BigBlueButton Pro plugin](https://elearningevolve.com/products/wp-virtual-classroom/)
+* Updated: Use the testing Blindside Networks BigBlueButton server when using free plugin
+* Fixed: Ability to open BBB room in browser when Joining Fullscreen from BuddyBoss mobile App
+
+### 1.5.4 ###
+* Fixed: Recording delete not working from BBB room page when pro plugin not enabled
+
+### 1.5.3 ###
+* Fixed: Wait for Moderator option not working on some BBB hosts
+* Updated: Require username input when user is not logged in to prevent join error
+
+### 1.5.2 ###
+* Updated: Compatibility with BBB Pro v2.4.0
+
+### 1.5.1 ###
+* Fixed: Remove admin permissions incorrectly set for other user roles in v1.2.1 update
+
+### 1.5.0 ###
+* Updated: Allow all logged-in users to access the BBB room without the need to enter the Access Code
+
+### 1.4.4 ###
+* Added: Share recording option for admins and moderators on bbb room page
+* Updated: Confirmation check before deleting recording
+
+### 1.4.3 ###
+* Fixed: Error when moderator and viewer access codes are same while saving room
+* Updated: New shortcodes added in Settings -> Shortcode Guide section
+
+### 1.4.2 ###
+* Added: New capability add_bbb_rooms to allow Add New rooms access to admins and users with this new capability
+* Added: Update capability permissions on each plugin update to prevent the need for activate/deactivate plugin
+* Updated: Performance improvement with code optimization
+
+### 1.4.1 ###
+* Updated: Remove custom fields from BBB Rooms -> Add New
+* Added: New capability can_limit_user_in_bbb_rooms the room limit option will show only to admins and users with this new capability
+* Added: New tutorial [How to allow instructors or users to manage BigblueButton Rooms on WordPress](https://elearningevolve.com/blog/how-to-allow-instructors-to-manage-bbb-rooms-on-wp/) in plugin settings page
+
+### 1.4.0 ###
+* Added: Tutorials section on plugin settings page
+* Added: Shortcode guide section on settings page for all available plugin shortcodes
+* Updated: Restrict settings page access only to Admin level users
+* Updated: BBB multiple room select shortcode layout to align with the join form
+* Updated: Compatibility for Room level limit feature addition in Pro plugin
+* Fixed: Access code error message does not display when codes updated while meeting is running
+
+### 1.3.1 ###
+* Fixed: Error Call to undefined function get_current_screen()
+
+### 1.3.0 ###
+* Added: Automatically create a default Home Room under BBB Rooms -> All Rooms admin page
+* Added: Ability to start meeting from BBB Rooms -> All Rooms
+* Added: Ability to filter rooms by category from BBB Rooms -> All Rooms\
+* Added: Help text on BBB Rooms -> All Rooms page
+* Updated: Admin view of All Rooms page
+
+### 1.2.1 ###
+* Added: updated FAQ section and added new answers
+* Updated: Removed restriction for preview of unpublished rooms
+* Fixed: BBB Room create/edit permissions granted to non-admin user roles
+* Fixed: Permissions are not assigned on plugin activate
+[Action needed] Please deactivate and activate the plugin to apply the above fixes
+
 ### 1.2.0 ###
 * Added: Compatibility for per shortcode max participant room limit in Pro plugin
 * Added: Compatibility for pre upload presentation (global and per room basis) in Pro plugin
+* Added: Compatibility for the ability to customize background color for the room in Pro plugin
 * Added: Shortcode usage guide on the plugin settings page
 
 ### 1.1.6 ###
@@ -166,7 +318,7 @@ If a user has the capability to manage recordings, they will see a pencil icon n
 * Fixed: Super admin can not login WP multisite after activating the plugin
 
 ### 1.1.2 ###
-* Added: Our [Pro version](https://elearningevolve.com/products/bigbluebutton-wordpress-pro/) release notice on the plugin settings page
+* Added: Our [Pro version](https://elearningevolve.com/products/wp-virtual-classroom/) release notice on the plugin settings page
 
 ### 1.1.1 ###
 * Updated: Removed the need to assign activate_plugins user permission for admin BBB Rooms menu.
@@ -196,6 +348,7 @@ If a user has the capability to manage recordings, they will see a pencil icon n
 * Improvement: Readability of plugin conflict messages.
 
 ### 1.0.0 ###
+This plugin is a fork of the BigBlueButton plugin initially released by Blindside Networks but no longer maintained.
 * Improvement: Security enhancement on room join page.
 * Improvement: Tested with WP version 5.8.2.
 * Improvement: Ability to copy the shortcode from the BBB Rooms listing page.

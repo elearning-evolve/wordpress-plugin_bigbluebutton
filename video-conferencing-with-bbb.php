@@ -12,10 +12,10 @@
  * @package           Bigbluebutton
  *
  * @wordpress-plugin
- * Plugin Name:       Video Conferencing with BBB
- * Plugin URI:        https://github.com/elearning-evolve/wordpress-plugin_bigbluebutton
- * Description:       This plugin integrates it into WordPress allowing teachers to manage their virtual classrooms. BigBlueButton is an open source video conferencing system.
- * Version:           1.2.0
+ * Plugin Name:       Virtual Classroom & Video Conferencing - BigBlueButton
+ * Plugin URI:        https://wordpress.org/plugins/video-conferencing-with-bbb
+ * Description:       This plugin allows teachers to manage their virtual classrooms right from WordPress using BigBlueButton
+ * Version:           2.3.8
  * Author:            eLearning evolve <info@elearningevolve.com>
  * Author URI:        https://elearningevolve.com/
  * License:           GPL-2.0+
@@ -37,9 +37,13 @@ if ( function_exists( 'get_plugin_data' ) ) {
 	$plugin_data = get_plugin_data( __FILE__ );
 
 	$eevolve_constants = array(
-		'VIDEO_CONF VIDEO_CONF_WITH_BBB_VERSION' => esc_html( $plugin_data['Version'] ),
-		'VIDEO_CONF_WITH_BBB_PLUGIN_NAME'        => esc_html( $plugin_data['Name'] ),
-		'VIDEO_CONF_WITH_BBB_PRO'                => esc_url( 'https://elearningevolve.com/products/bigbluebutton-wordpress-pro/' ),
+		'VIDEO_CONF_WITH_BBB_VERSION'     => esc_html( $plugin_data['Version'] ),
+		'VIDEO_CONF_WITH_BBB_ENDPOINT'    => 'https://test-install.blindsidenetworks.com/bigbluebutton/',
+		'VIDEO_CONF_WITH_BBB_SALT'        => '8cd8ef52e8e101574e400365b55e11a6',
+		'VIDEO_CONF_WITH_BBB_PLUGIN_NAME' => esc_html( $plugin_data['Name'] ),
+		'VIDEO_CONF_WITH_BBB_PUBLIC_PATH' => __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR,
+		'VIDEO_CONF_WITH_BBB_IMG_URL'     => plugin_dir_url( __FILE__ ) . '/images',
+		'VIDEO_CONF_WITH_BBB_PRO'         => esc_url( 'https://elearningevolve.com/products/wp-virtual-classroom/' ),
 	);
 
 	foreach ( $eevolve_constants as $constant => $value ) {
@@ -57,7 +61,7 @@ function ee_activate_video_conf_with_bbb() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bigbluebutton-activator.php';
 	Bigbluebutton_Activator::activate();
 }
-register_deactivation_hook( __FILE__, 'ee_activate_video_conf_with_bbb' );
+register_activation_hook( __FILE__, 'ee_activate_video_conf_with_bbb' );
 
 //add_action( 'admin_init', 'ee_activate_video_conf_with_bbb', 1 );
 
@@ -84,7 +88,6 @@ add_action(
 
 /**
  * Check plugin conflicts.
- *
  */
 function video_conf_bbb_check_conflict( $is_echo = true ) {
 
@@ -102,7 +105,7 @@ function video_conf_bbb_check_conflict( $is_echo = true ) {
 	if ( isset( $plugins ) ) {
 		foreach ( $plugins as $basename => $plugin ) {
 			if ( is_plugin_active( $basename ) || is_plugin_active_for_network( $basename )
-				|| defined( $plugin['class'] ) || ( isset( $_REQUEST['action'] ) && 'activate' == $_REQUEST['action'] && $basename == $_REQUEST['plugin'] ) ) {
+				|| defined( $plugin['class'] ) || ( isset( $_REQUEST['plugin'] ) && isset( $_REQUEST['action'] ) && 'activate' == $_REQUEST['action'] && $basename == $_REQUEST['plugin'] ) ) {
 
 				if ( isset( $_GET['activate'] ) ) {
 					unset( $_GET['activate'] );

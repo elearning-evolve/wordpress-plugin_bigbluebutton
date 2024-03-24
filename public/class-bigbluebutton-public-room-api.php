@@ -57,27 +57,36 @@ class Bigbluebutton_Public_Room_Api {
 	 * @since   3.0.0
 	 */
 	public function bbb_user_join_room() {
-		if ( ! empty( $_POST['action'] ) && 'join_room' == $_POST['action'] && wp_verify_nonce( $_POST['bbb_join_room_meta_nonce'], 'bbb_join_room_meta_nonce' ) ) {
-			$room_id             = sanitize_text_field( $_POST['room_id'] );
-			$user                = wp_get_current_user();
-			$entry_code          = '';
-			$username            = $this->get_meeting_username( $user );
-			$moderator_code      = strval( get_post_meta( $room_id, 'bbb-room-moderator-code', true ) );
-			$viewer_code         = strval( get_post_meta( $room_id, 'bbb-room-viewer-code', true ) );
-			$wait_for_mod        = get_post_meta( $room_id, 'bbb-room-wait-for-moderator', true );
-			$access_using_code   = BigBlueButton_Permissions_Helper::user_has_bbb_cap( 'join_with_access_code_bbb_room' );
-			$access_as_moderator = BigBlueButton_Permissions_Helper::user_has_bbb_cap( 'join_as_moderator_bbb_room' );
-			$access_as_viewer    = BigBlueButton_Permissions_Helper::user_has_bbb_cap( 'join_as_viewer_bbb_room' );
-			$return_url          = esc_url_raw( $_POST['REQUEST_URI'] );
-			$room_limit          = ( isset( $_POST['post_id'] ) ? get_post_meta( sanitize_text_field( $_POST['post_id'] ), 'bbb_pro_room_limit', true ) : 0 );
-			$room_limit_global   = intval( get_option( 'bbb_pro_max_participants' ) );
+		if ( isset( $_GET['room_id'] ) && ! empty( $_GET['action'] ) && 'join_room' == $_GET['action'] && wp_verify_nonce( sanitize_text_field( $_GET['bbb_join_room_meta_nonce'] ), 'bbb_join_room_meta_nonce' ) ) {
+			$room_id                  = sanitize_text_field( $_GET['room_id'] );
+			$user                     = wp_get_current_user();
+			$entry_code               = '';
+			$username                 = EE_Bigbluebutton_Helper::get_meeting_username( $user );
+			$m_info                   = Bigbluebutton_Api::get_meeting_info( $room_id );
+			$wait_for_mod             = get_post_meta( $room_id, 'bbb-room-wait-for-moderator', true );
+			$access_using_code        = BigBlueButton_Permissions_Helper::user_has_bbb_cap( 'join_with_access_code_bbb_room' );
+			$access_as_moderator      = BigBlueButton_Permissions_Helper::user_has_bbb_cap( 'join_as_moderator_bbb_room' );
+			$access_as_viewer         = BigBlueButton_Permissions_Helper::user_has_bbb_cap( 'join_as_viewer_bbb_room' );
+			$return_url               = esc_url_raw( $_GET['current_page'] );
+			$room_limit_post          = intval( isset( $_GET['post_id'] ) ? get_post_meta( sanitize_text_field( $_GET['post_id'] ), 'bbb_pro_room_limit', true ) : 0 );
+			$room_limit_cpt           = intval( get_post_meta( $room_id, 'bbb-room-limit', true ) );
+			$room_limit_global        = intval( get_option( 'bbb_pro_max_participants' ) );
+
+			// If meeting already running then get the codes directly from the meeting to avoid sync issue
+			if ( $m_info ) {
+				$moderator_code = strval( $m_info->moderatorPW );
+				$viewer_code    = strval( $m_info->attendeePW );
+			} else {
+				$moderator_code = strval( get_post_meta( $room_id, 'bbb-room-moderator-code', true ) );
+				$viewer_code    = strval( get_post_meta( $room_id, 'bbb-room-viewer-code', true ) );
+			}
 
 			if ( $access_as_moderator || get_post( $room_id )->post_author == $user->ID ) {
 				$entry_code = $moderator_code;
 			} elseif ( $access_as_viewer ) {
 				$entry_code = $viewer_code;
-			} elseif ( $access_using_code && isset( $_POST['bbb_meeting_access_code'] ) ) {
-				$entry_code = sanitize_text_field( $_POST['bbb_meeting_access_code'] );
+			} elseif ( $access_using_code && isset( $_GET['bbb_meeting_access_code'] ) ) {
+				$entry_code = sanitize_text_field( $_GET['bbb_meeting_access_code'] );
 				if ( $entry_code != $moderator_code && $entry_code != $viewer_code ) {
 					$query = array(
 						'password_error' => true,
@@ -91,26 +100,7 @@ class Bigbluebutton_Public_Room_Api {
 				wp_die( esc_html__( 'You do not have permission to enter the room. Please request permission.', 'bigbluebutton' ) );
 			}
 
-			if ( $room_limit_global || $room_limit ) {
-				// If specific limit set then ignore global limit
-				if ( $room_limit ) {
-					$room_limit_global = $room_limit;
-				}
-
-				$m_info = Bigbluebutton_Api::get_meeting_info( $room_id );
-				if ( $m_info && isset( $m_info->participantCount ) ) {
-					$room_limit_global += 1; // Keep atleast one partc space incase of disconnection issues
-					if ( $m_info->participantCount >= $room_limit_global ) {
-						$query = array(
-							'max_user_error' => true,
-							'room_id'        => $room_id,
-							'username'       => $username,
-						);
-						wp_redirect( add_query_arg( $query, $return_url ) );
-						exit;
-					}
-				}
-			}
+			EE_Bigbluebutton_Helper::check_room_limit( $room_id, $username, $return_url, $room_limit_global, $room_limit_cpt, $room_limit_post );
 
 			$this->join_meeting( $return_url, $room_id, $username, $entry_code, $viewer_code, $wait_for_mod );
 		}
@@ -195,13 +185,15 @@ class Bigbluebutton_Public_Room_Api {
 	private function join_meeting( $return_url, $room_id, $username, $entry_code, $viewer_code, $wait_for_mod ) {
 		$join_url = apply_filters(
 			'bbb_join_room_url',
-			Bigbluebutton_Api::get_join_meeting_url( $room_id, $username, $entry_code, $return_url ),
-			$return_url
+			Bigbluebutton_Api::get_join_meeting_url( $room_id, $username, $entry_code, $viewer_code, $return_url ),
+			$return_url,
+			$room_id
 		);
 
 		if ( $entry_code == $viewer_code && 'true' == $wait_for_mod ) {
 			if ( Bigbluebutton_Api::is_meeting_running( $room_id ) ) {
 				wp_redirect( $join_url );
+				exit;
 			} else {
 				$query = array(
 					'bigbluebutton_wait_for_mod' => true,
@@ -217,27 +209,11 @@ class Bigbluebutton_Public_Room_Api {
 					$query['temp_entry_pass'] = wp_create_nonce( 'bigbluebutton_entry_code_' . $entry_code );
 				}
 				wp_redirect( add_query_arg( $query, $return_url ) );
+				exit;
 			}
 		} else {
 			wp_redirect( $join_url );
+			exit;
 		}
-	}
-
-	/**
-	 * Get user's name for the meeting.
-	 *
-	 * @since   3.0.0
-	 *
-	 * @param   Object $user       User object.
-	 * @return  String $username   Display of the user for joining the meeting.
-	 */
-	private function get_meeting_username( $user ) {
-		$username = '';
-		if ( $user && $user->display_name ) {
-			$username = $user->display_name;
-		} elseif ( isset( $_POST['bbb_meeting_username'] ) ) {
-			$username = sanitize_text_field( $_POST['bbb_meeting_username'] );
-		}
-		return $username;
 	}
 }

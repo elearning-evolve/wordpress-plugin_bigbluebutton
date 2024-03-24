@@ -2,6 +2,14 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+#bbb-general-settings-form .button-start-instance {
+    margin-left: 8px;
+    -webkit-appearance: button;
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+    font-weight: 600;
+}
 
 .bbb-settings-card {
     min-width: 22em;
@@ -21,6 +29,7 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .bbb-row:nth-child(even) {
     border-bottom-style: solid;
     border-width: 2px;
@@ -29,7 +38,7 @@
 
 .bbb-col-left {
     flex: 20%;
-    max-width: 20%;
+    max-width: 25%;
     padding: 0 4px;
 }
 
@@ -115,12 +124,14 @@
     padding: 0 4px;
     font-size: 0.9em;
 }
+
 .zvc-row {
     display: flex;
     flex-wrap: wrap;
     place-items: flex-start;
     margin-top: 5px;
 }
+
 .zvc-row .addon-wrap {
     display: flex;
     flex-wrap: wrap;
@@ -171,8 +182,7 @@
 }
 
 #zvc-cover {
-    background: url('../images/ajax-loader.gif') no-repeat scroll center center
-        #f1f1f1;
+    background: url('../images/ajax-loader.gif') no-repeat scroll center center #f1f1f1;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -235,7 +245,8 @@
 }
 
 .post-type-bbb-room .edit-post-layout__footer {
-    display: none; /* Hide edit post footer breadcrum */
+    display: none;
+    /* Hide edit post footer breadcrum */
 }
 
 .bbb-pro-shortcode-usage code {
@@ -245,4 +256,26 @@
 
 .bbb-pro-shortcode-usage .desc {
     margin-top: 26px;
+}
+
+.bbb-dashicon {
+    margin: 3px;
+    cursor: pointer;
+}
+
+.wp-list-table .start-meeting a {
+    padding: 3px 20px 3px 20px;
+}
+
+/* Credits: https: //stackoverflow.com/questions/3559935/wordpress-is-there-a-way-to-adjust-the-column-width-for-the-post-table */
+.post-type-bbb-room table.fixed {
+    table-layout: auto;
+}
+
+.spacer {
+    margin: 10px 0 10px 0;
+}
+
+.bbb-rooms_page_bbb-room-server-settings ul {
+    list-style: inside;
 }

@@ -45,7 +45,7 @@ class Bigbluebutton_Tokens_Helper {
 				$tokens_string .= $param;
 			} else {
 				if ( 'token' == substr( $param, 0, 5 ) ) {
-					$param = substr( $param, 5 );
+					$param          = substr( $param, 5 );
 					$tokens_string .= ',' . $param;
 				}
 			}
@@ -89,6 +89,10 @@ class Bigbluebutton_Tokens_Helper {
 				'room_id'   => $room_id,
 				'room_name' => get_the_title( $room_id ),
 			);
+
+			if ( isset( $_REQUEST['room_id'] ) && ( $_REQUEST['room_id'] == $room_id || base64_decode( $_REQUEST['room_id'] ) == $room_id ) ) {
+				$selected_room_id = $room_id;
+			}
 		}
 
 		if ( count( $rooms ) > 0 ) {
@@ -96,8 +100,8 @@ class Bigbluebutton_Tokens_Helper {
 				$access_as_moderator = ( get_current_user_id() == get_post( $rooms[0]->room_id )->post_author );
 			}
 			$selected_room = $rooms[0]->room_id;
-			if ( isset( $_REQUEST['room_id'] ) ) {
-				$selected_room = $_REQUEST['room_id'];
+			if ( isset( $selected_room_id ) ) {
+				$selected_room = $selected_room_id;
 			}
 			$join_form = $display_helper->get_join_form_as_string( $selected_room, $meta_nonce, $access_as_moderator, $access_as_viewer, $access_using_code );
 			if ( count( $rooms ) > 1 ) {
@@ -186,6 +190,16 @@ class Bigbluebutton_Tokens_Helper {
 		if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
 			$can_view = false;
 		}
+
+		// Elementor checks
+		if ( ( isset( $_REQUEST['action'] ) && 'elementor_ajax' == $_REQUEST['action'] ) || isset( $_GET['elementor-preview'] ) ) {
+			$can_view = false;
+		}
+
+		if ( EE_Bigbluebutton_Helper::check_if_rest_or_json() ) {
+			$can_view = false;
+		}
+
 		return $can_view;
 	}
 
@@ -203,8 +217,8 @@ class Bigbluebutton_Tokens_Helper {
 		$room    = get_post( $room_id );
 		if ( false !== $room && null !== $room && 'bbb-room' == $room->post_type ) {
 			if ( 'publish' != $room->post_status ) {
-				self::set_error_message( sprintf( wp_kses( __( 'The token: %s is not associated with a published room.', 'bigbluebutton' ), array() ), $token ), $author );
-				return 0;
+				//self::set_error_message( sprintf( wp_kses( __( 'The token: %s is not associated with a published room.', 'bigbluebutton' ), array() ), $token ), $author );
+				//return 0;
 			}
 			return $room->ID;
 		} else {
@@ -240,8 +254,8 @@ class Bigbluebutton_Tokens_Helper {
 			foreach ( $query->posts as $key => $room_id ) {
 				$room = get_post( $room_id );
 				if ( 'publish' != $room->post_status ) {
-					self::set_error_message( sprintf( wp_kses( __( 'The token: %s is not associated with a published room.', 'bigbluebutton' ), array() ), $token ), $author );
-					return 0;
+					// self::set_error_message( sprintf( wp_kses( __( 'The token: %s is not associated with a published room.', 'bigbluebutton' ), array() ), $token ), $author );
+					// return 0;
 				}
 				return $room_id;
 			}

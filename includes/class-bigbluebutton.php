@@ -76,28 +76,18 @@ class VideoConferencingWithBBB {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_global_hooks();
 
 	}
 
 	/**
-	 * Migrate database if user is updating from an older version of the plugin.
+	 * Global hooks for both public and admin
 	 *
-	 * @since 3.0.0
+	 * @return void
 	 */
-	public function check_migration() {
-		$previous_version = get_option( 'bigbluebutton_plugin_version' );
-		$oldest_version   = get_option( 'bbb_db_version' );
-		$new_version      = $this->get_version();
-		$migrator         = new Bigbluebutton_Migration( $previous_version, $new_version );
-
-		if ( false === $previous_version && false === $oldest_version ) {
-			update_option( 'bigbluebutton_plugin_version', $new_version );
-		} elseif ( ( false === $previous_version && false !== $oldest_version ) || version_compare( $previous_version, $new_version, '<' ) ) {
-			$success = $migrator->migrate();
-			if ( $success ) {
-				update_option( 'bigbluebutton_plugin_version', $new_version );
-			}
-		}
+	public function define_global_hooks() {
+		// Resolve conflict with Woffice WordPress theme
+		$this->loader->add_filter( 'fw_ext_shortcodes_disable_shortcodes', $this, 'fw_ext_shortcodes_disable_shortcodes' );
 	}
 
 	/**
@@ -117,6 +107,16 @@ class VideoConferencingWithBBB {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		/**
+		 * The activator class
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bigbluebutton-activator.php';
+
+		/**
+		 * The class for all helper functions
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bigbluebutton-helper.php';
+
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
@@ -206,7 +206,7 @@ class VideoConferencingWithBBB {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/helpers/class-bigbluebutton-permissions-helper.php';
 
 		$this->loader = new Bigbluebutton_Loader();
-		$this->loader->add_action( 'plugins_loaded', $this, 'check_migration' );
+		//$this->loader->add_action( 'plugins_loaded', $this, 'check_migration' );
 	}
 
 	/**
@@ -222,7 +222,7 @@ class VideoConferencingWithBBB {
 
 		$plugin_i18n = new Bigbluebutton_I18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -238,6 +238,10 @@ class VideoConferencingWithBBB {
 		$plugin_admin                       = new Bigbluebutton_Admin( $this->get_plugin_name(), $this->get_version() );
 		$plugin_admin_api                   = new Bigbluebutton_Admin_Api();
 		$plugin_admin_register_custom_types = new Bigbluebutton_Register_Custom_Types();
+		$activator                          = new Bigbluebutton_Activator();
+
+		// Set plugin roles
+		$this->loader->add_action( 'admin_init', $activator, 'admin_init' );
 
 		// Suggest not disabling heartbeat.
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'check_for_heartbeat_script' );
@@ -275,6 +279,18 @@ class VideoConferencingWithBBB {
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'bbb_room_custom_columns', 10, 2 );
 		$this->loader->add_filter( 'manage_bbb-room_posts_columns', $plugin_admin, 'add_custom_room_column_to_list' );
 
+		// Show taxonomy filter in rooms table
+		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'bbb_filter_post_type_by_taxonomy' );
+		$this->loader->add_filter( 'parse_query', $plugin_admin, 'bbb_convert_id_to_term_in_query' );
+
+		// Order posts by menu order
+		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'bbb_order_rooms' );
+
+		// Start meeting from admin
+		$this->loader->add_action( 'init', $plugin_admin, 'bbb_start_meeting_admin' );
+
+		// Add contextual help tab
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'add_help_tab' );
 	}
 
 	/**
@@ -305,8 +321,7 @@ class VideoConferencingWithBBB {
 		$this->loader->add_filter( 'query_vars', $plugin_public, 'add_query_vars' );
 
 		// Join room API.
-		$this->loader->add_action( 'admin_post_join_room', $plugin_public_room_api, 'bbb_user_join_room' );
-		$this->loader->add_action( 'admin_post_nopriv_join_room', $plugin_public_room_api, 'bbb_user_join_room' );
+		$this->loader->add_action( 'init', $plugin_public_room_api, 'bbb_user_join_room' );
 		$this->loader->add_filter( 'heartbeat_received', $plugin_public_room_api, 'bbb_check_meeting_state', 10, 2 );
 		$this->loader->add_filter( 'heartbeat_nopriv_received', $plugin_public_room_api, 'bbb_check_meeting_state', 10, 2 );
 
@@ -369,5 +384,17 @@ class VideoConferencingWithBBB {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+		/**
+		 * Resolve conflict with Woffice WordPress theme
+		 *
+		 * @param [array] $to_disable
+		 * @return array
+		 */
+	public function fw_ext_shortcodes_disable_shortcodes( $to_disable ) {
+		$to_disable[] = 'bigbluebutton';
+
+		return $to_disable;
 	}
 }
