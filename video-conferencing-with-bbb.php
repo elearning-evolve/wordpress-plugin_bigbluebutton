@@ -15,7 +15,7 @@
  * Plugin Name:       Virtual Classroom & Video Conferencing - BigBlueButton
  * Plugin URI:        https://wordpress.org/plugins/video-conferencing-with-bbb
  * Description:       This plugin allows teachers to manage their virtual classrooms right from WordPress using BigBlueButton
- * Version:           2.3.8
+ * Version:           2.3.9
  * Author:            eLearning evolve <info@elearningevolve.com>
  * Author URI:        https://elearningevolve.com/
  * License:           GPL-2.0+

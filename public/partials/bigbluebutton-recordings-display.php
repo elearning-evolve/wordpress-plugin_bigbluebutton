@@ -10,7 +10,7 @@
 					<?php esc_html_e( 'Recording', 'bigbluebutton' ); ?>
 					<i class="<?php echo esc_attr( $sort_fields['name']->classes ); ?>"></i>
 				</a>
-				<?php if( $recording_description_exist ): ?>
+				<?php if ( $recording_description_exist ) : ?>
 				<a href="<?php echo esc_url( $sort_fields['description']->url ); ?>" class="flex-row flex-row-<?php echo esc_attr( $columns ); ?> <?php echo esc_html( $sort_fields['description']->header_classes ); ?>" role="columnheader">
 					<?php esc_html_e( 'Description' ); ?>
 					<i class="<?php echo esc_attr( $sort_fields['description']->classes ); ?>"></i>
@@ -43,7 +43,7 @@
 								class="dashicons dashicons-edit bbb-icon bbb_edit_recording_data"></i>
 						<?php } ?>
 					</div>
-					<?php if( $recording_description_exist ): ?>
+					<?php if ( $recording_description_exist ) : ?>
 						<div id="bbb-recording-description-<?php echo esc_attr( $recording->recordID ); ?>" class="flex-row flex-row-<?php echo esc_attr( $columns ); ?>" role="cell">
 							<?php echo esc_html( urldecode( $recording->metadata->{'recording-description'} ) ); ?>
 							<?php if ( $manage_bbb_recordings ) { ?>
@@ -58,11 +58,11 @@
 							<?php } ?>
 						</div>
 					<?php endif; ?>
-					<div class="flex-row flex-row-<?php echo esc_attr($columns); ?>" role="cell">
+					<div class="flex-row flex-row-<?php echo esc_attr( $columns ); ?>" role="cell">
 						<?php echo esc_html( date_i18n( $date_format, (int) $recording->startTime / 1000 ) ); ?>
 					</div>
-					<div class="flex-row flex-row-<?php echo esc_attr($columns); ?>" role="cell">
-						<div id="bbb-recording-links-block-<?php echo esc_attr($recording->recordID); ?>" class="bbb-recording-link-block" style="<?php echo ( $recording->published == 'false' ? 'display:none;' : '' ); ?>">
+					<div class="flex-row flex-row-<?php echo esc_attr( $columns ); ?>" role="cell">
+						<div id="bbb-recording-links-block-<?php echo esc_attr( $recording->recordID ); ?>" class="bbb-recording-link-block" style="<?php echo ( $recording->published == 'false' ? 'display:none;' : '' ); ?>">
 							<?php foreach ( $recording->playback->format as $format ) { ?>
 								<?php
 								if ( $format->type == $default_bbb_recording_format || $view_extended_recording_formats ) {
@@ -95,11 +95,11 @@
 								title="<?php _ex( 'Trash', 'post status' ); ?>"
 								aria-label="<?php _ex( 'Trash', 'post status' ); ?>"></i>
 							&nbsp;
-							<div class="tooltip" onclick="copyToClipboard(this)" onmouseout="copyClipboardExit(this)"
+							<span class="tooltip" onclick="copyToClipboard(this)" onmouseout="copyClipboardExit(this)"
 								data-value="<?php echo esc_url( $recording_url ); ?>">
 								<span class="tooltiptext recording-url-tooltip"><?php esc_html_e( 'Share Recording URL', 'bigbluebutton' ); ?></span>
 								<span class="<?php echo esc_attr( $recording->share_icon_classes ); ?>"></span>
-							</div>
+							</span>
 						</div>
 					<?php } ?>
 				</div>

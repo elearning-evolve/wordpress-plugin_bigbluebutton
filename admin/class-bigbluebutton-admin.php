@@ -249,14 +249,14 @@ class Bigbluebutton_Admin {
 				break;
 			case 'permalink':
 				$permalink = ( get_permalink( $post_id ) ? get_permalink( $post_id ) : '' );
-				echo '<div class="tooltip" onclick="copyToClipboard(this)" onmouseout="copyClipboardExit(this)"
+				echo '<span class="tooltip" onclick="copyToClipboard(this)" onmouseout="copyClipboardExit(this)"
 						data-value="' . esc_url( $permalink ) . '">
 						<span class="tooltiptext invite-tooltip">' . esc_html( 'Copy Invite URL', 'bigbluebutton' ) . '</span>
 					<span class="bbb-button button">
 						<span class="bbb-dashicon dashicons dashicons-admin-page"></span>'
 						. __( 'Copy', 'bigbluebutton' ) .
 					'</span>
-				</div>';
+				</span>';
 				break;
 			case 'token':
 				if ( metadata_exists( 'post', $post_id, 'bbb-room-token' ) ) {
@@ -272,12 +272,12 @@ class Bigbluebutton_Admin {
 				} else {
 					$token = 'z' . $post_id;
 				}
-				echo '<div class="tooltip" onclick="copyToClipboard(this)" onmouseout="copyClipboardExit(this)"
+				echo '<span class="tooltip" onclick="copyToClipboard(this)" onmouseout="copyClipboardExit(this)"
 						data-value="[bigbluebutton token=' . esc_attr( $token ) . ']">
 						<span class="tooltiptext shortcode-tooltip">' . esc_html( 'Copy Shortcode', 'bigbluebutton' ) . '</span>
 						<input type="text" disabled value="[bigbluebutton token= ' . esc_attr( $token ) . ']"/>
 						<span class="bbb-dashicon dashicons dashicons-admin-page"></span>
-					</div>';
+					</span>';
 				break;
 			case 'start-time':
 				if ( ! Bigbluebutton_Loader::is_bbb_pro_active() ) {
