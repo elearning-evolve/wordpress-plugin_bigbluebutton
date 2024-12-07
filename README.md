@@ -4,9 +4,9 @@ Contributors: blindsidenetworks, jfederico, yfngdu, elearningevolve, adeelraza_7
 Donate link: https://elearningevolve.com/products/donate/  
 Tags: virtual classroom, video conference, BigBlueButton, BBB, online meeting, web conferencing, online teaching, learning management system, LMS, online session, live training, video conferencing, video conference, meetings, virtual meetings
 Requires at least: 5.1  
-Tested up to: 6.5.4  
+Tested up to: 6.7.1  
 Requires PHP: 7.2  
-Stable tag: 2.4.1  
+Stable tag: 2.4.2  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -18,9 +18,6 @@ This plugin allows teachers to manage their live virtual classrooms, video confe
 
 BBB stands as an open-source video conferencing solution crafted with the motto **"Built For Teachers"**. Equipped with all the essential features typical of a web conferencing platform, it goes beyond by facilitating active collaboration to enhance virtual classroom engagement. As an educator, BBB stands out as one of the top choices for online meetings. Explore all its features [here](https://support.blindsidenetworks.com/hc/en-us/articles/360052738972-What-are-the-features-in-BigBlueButton-).
 
-### REQUIRED: BigBlueButton Server ###
-BBB requires a hosting server that can be connected to our plugin. Please refer to our [hosting guide](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/) for setup.
-
 ### Virtual Classroom for WordPress Features ###
 Virtual Classroom for WordPress enables the user to create BBB rooms right from the WordPress dashboard. Once the room is created it can be added to any WordPress page through a simple shortcode. There is also a possibility to enter multiple rooms in the shortcode to let the user choose the room that they want to join.
 
@@ -30,7 +27,12 @@ After the session is over the plugin can also display the recording of the sessi
 
 ### Free Plugin Limitations ###
 * Add New option for BBB Rooms on backend is limited to only a maximum of 2 Rooms
-* Join room on the same WP page is not available. Only join in a new full screen window is supported
+* Join room on the same page is not available. Only join in a new full screen window is supported
+
+### REQUIRED: Separate BigBlueButton Server ###
+**BBB software requires a separate hosting server that should be connected to our plugin. Please refer to our [hosting guide](https://elearningevolve.com/blog/hosting-virtual-classroom-for-wordpress/) for setup.**
+
+**This free plugin uses a BigBlueButton server provided by Blindside Networks for testing purposes only, is available "AS IS" without any warranty. It's publicly accessible, and sessions and recordings may be open to anyone. Recordings on this testing server are not accessible and will be removed after 7 days, so do not rely on them.**
 
 ### Pro Version Features ###
 There is also a Pro version available with this plugin that offers the below features:
@@ -172,6 +174,9 @@ To allow a user role to manage recordings add the capability, **manage_bbb_room_
 8. BBB Rooms can also be organized using Categories.
 
 ## Changelog ##
+### 2.4.2 ###
+* Added: Character limit message for meeting access code on the meeting edit page
+
 ### 2.4.1 ###
 * Added: Translation support for a few text snippets in the plugin that were not translation friendly
 
